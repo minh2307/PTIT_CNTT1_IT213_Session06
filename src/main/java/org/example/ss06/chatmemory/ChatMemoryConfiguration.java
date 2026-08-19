@@ -9,13 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * Shared chat-memory configuration for the application.
- *
- * <p>The repository is intentionally in-memory for the exercise. Replacing it
- * with a JDBC-backed ChatMemoryRepository later does not require changing the
- * advisor or the REST API.</p>
- */
+
 @Configuration
 public class ChatMemoryConfiguration {
 
@@ -38,10 +32,6 @@ public class ChatMemoryConfiguration {
                 .build();
     }
 
-    /**
-     * Add this advisor to the shared ChatClient. The conversation id is read
-     * from ChatMemory.CONVERSATION_ID in each ChatClient request.
-     */
     @Bean
     MessageChatMemoryAdvisor chatMemoryAdvisor(ChatMemory chatMemory) {
         return MessageChatMemoryAdvisor.builder(chatMemory).build();
