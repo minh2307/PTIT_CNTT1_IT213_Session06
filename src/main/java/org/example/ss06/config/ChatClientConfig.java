@@ -3,7 +3,11 @@ package org.example.ss06.config;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.example.ss06.tool.AppointmentTools;
+import org.example.ss06.tool.CustomerTools;
 
+@Configuration
 public class ChatClientConfig {
     private static final String SYSTEM_PROMPT = """
             Bạn là SmileCare Assistant, trợ lý ảo của phòng khám nha khoa SmileCare.
@@ -70,23 +74,18 @@ public class ChatClientConfig {
     @Bean
     public ChatClient chatClient(
             ChatClient.Builder builder,
-            DoctorTools doctorTools,
-            ServiceTools serviceTools,
+            CustomerTools customerTools,
             AppointmentTools appointmentTools
     ) {
 
-        ChatOptions chatOptions = ChatOptions.builder()
-                .temperature(0.2)
-                .topP(0.8)
-                .maxTokens(1000)
-                .build();
-
         return builder
                 .defaultSystem(SYSTEM_PROMPT)
-                .defaultOptions(chatOptions)
+                .defaultOptions(ChatOptions.builder()
+                        .temperature(0.2)
+                        .topP(0.8)
+                        .maxTokens(1000))
                 .defaultTools(
-                        doctorTools,
-                        serviceTools,
+                        customerTools,
                         appointmentTools
                 )
                 .build();

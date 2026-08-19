@@ -1,11 +1,15 @@
 package org.example.ss06.model.entity;
 
+import jakarta.persistence.*;
 import org.example.ss06.model.utils.AppointmentStatus;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Entity
 public class Appointment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String customerName;
     private String phone;
@@ -13,6 +17,7 @@ public class Appointment {
     private Long serviceId;
     private LocalDate appointmentDate;
     private LocalTime appointmentTime;
+    @Enumerated(jakarta.persistence.EnumType.STRING)
     private AppointmentStatus status;
     public Appointment() {
     }
